@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <style>
+        /* General body styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        /* Form container */
+        .form-container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 40px; /* Increased padding for more space */
+            width: 500px; /* Increased width */
+            text-align: center;
+        }
+
+        /* Input field and button styling */
+        input[type="text"] {
+            width: 80%;
+            padding: 15px; /* Increased padding */
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1.2em; /* Increased font size */
+        }
+
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 15px 20px; /* Increased padding */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2em; /* Increased font size */
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Weather details section */
+        .weather-details {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px; /* Increased padding */
+            width: 600px; /* Increased width */
+            margin-top: 40px; /* Increased margin-top */
+            text-align: left;
+        }
+
+        .weather-details h2 {
+            font-size: 2em; /* Increased font size */
+            color: #333;
+        }
+
+        .weather-details p {
+            color: #555;
+            margin: 12px 0; /* Increased margin */
+            font-size: 1.2em; /* Increased font size */
+        }
+
+        /* Error message */
+        .error-message {
+            color: red;
+            font-size: 1.3em; /* Increased font size */
+        }
+
+        /* Back link */
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007BFF;
+            font-size: 1.2em; /* Increased font size */
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Form to enter city name -->
+    <div class="form-container">
+        <h1>Weather App</h1>
+        <form method="POST" action="{% url 'get_weather' %}">
+            {% csrf_token %}
+            <label for="city">Enter City Name:</label>
+            <input type="text" id="city" name="city" required>
+            <button type="submit">Get Weather</button>
+        </form>
+    </div>
+
+    <!-- Weather details or error message -->
+    {% if weather %}
+        <div class="weather-details">
+            {% if weather.error %}
+                <p class="error-message">{{ weather.error }}</p>
+            {% else %}
+                <h2>Weather in {{ weather.city }}, {{ weather.country }}</h2>
+                <p><strong>Temperature:</strong> {{ weather.temperature }}°C</p>
+                <p><strong>Condition:</strong> {{ weather.description }}</p>
+                <p><strong>Humidity:</strong> {{ weather.humidity }}%</p>
+            {% endif %}
+        </div>
+    {% endif %}
+
+</body>
+</html>

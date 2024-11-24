@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detailed Weather Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .weather-container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px; /* Increased padding */
+            width: 600px; /* Increased width */
+            text-align: center;
+        }
+
+        .weather-container h2 {
+            font-size: 2em; /* Increased font size */
+            margin-bottom: 20px; /* Increased margin */
+            color: #333;
+        }
+
+        .weather-details {
+            text-align: left;
+            margin-top: 20px; /* Increased margin */
+            color: #555;
+        }
+
+        .weather-details p {
+            margin: 12px 0; /* Increased margin */
+            font-size: 1.2em; /* Increased font size */
+        }
+
+        .weather-details strong {
+            color: #333;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 30px; /* Increased margin */
+            text-decoration: none;
+            color: #007BFF;
+            font-size: 1.2em; /* Increased font size */
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="weather-container">
+        {% if weather %}
+            {% if weather.error %}
+                <p>{{ weather.error }}</p>
+            {% else %}
+                <h2>Weather in {{ weather.city }}, {{ weather.country }}</h2>
+                <div class="weather-details">
+                    <p><strong>Temperature:</strong> {{ weather.temperature }}°C</p>
+                    <p><strong>Condition:</strong> {{ weather.description }}</p>
+                    <p><strong>Humidity:</strong> {{ weather.humidity }}%</p>
+                    <p><strong>Wind Speed:</strong> {{ weather.wind_speed }} m/s</p>
+                    <p><strong>Pressure:</strong> {{ weather.pressure }} hPa</p>
+                    <p><strong>Visibility:</strong> {{ weather.visibility }} meters</p>
+                    <p><strong>Sunrise:</strong> {{ weather.sunrise }}</p>
+                    <p><strong>Sunset:</strong> {{ weather.sunset }}</p>
+                </div>
+            {% endif %}
+        {% elif error %}
+            <p>{{ error }}</p>
+        {% endif %}
+        <a href="{% url 'index' %}" class="back-link">Go Back</a>
+    </div>
+</body>
+</html>
